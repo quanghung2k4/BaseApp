@@ -1,8 +1,6 @@
 package com.learn.roomrentalapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +16,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     private Context context;
     private List<Room> roomList;
+    private OnRoomItemClickListener listener;
 
-    public RoomAdapter(Context context, List<Room> roomList) {
+    public RoomAdapter(Context context, List<Room> roomList, OnRoomItemClickListener listener) {
         this.context = context;
         this.roomList = roomList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -46,22 +46,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, EditRoomActivity.class);
-            intent.putExtra("room_position", position);
-            context.startActivity(intent);
+            if (listener != null) {
+                listener.onRoomItemClick(position);
+            }
         });
 
         holder.itemView.setOnLongClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Xóa phòng")
-                    .setMessage("Bạn có chắc chắn muốn xóa phòng này?")
-                    .setPositiveButton("Xóa", (dialog, which) -> {
-                        roomList.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, roomList.size());
-                    })
-                    .setNegativeButton("Hủy", null)
-                    .show();
+            if (listener != null) {
+                listener.onRoomItemLongClick(position);
+            }
             return true;
         });
     }
@@ -80,5 +73,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             tvRoomPrice = itemView.findViewById(R.id.tvRoomPrice);
             tvRoomStatus = itemView.findViewById(R.id.tvRoomStatus);
         }
+    }
+
+    public interface OnRoomItemClickListener {
+        void onRoomItemClick(int position);
+        void onRoomItemLongClick(int position);
     }
 }

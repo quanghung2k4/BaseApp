@@ -1,6 +1,7 @@
 package com.learn.roomrentalapp;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -30,14 +31,19 @@ public class EditRoomActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
 
+        // Nhận dữ liệu phòng từ Intent
         roomPosition = getIntent().getIntExtra("room_position", -1);
+        room = (Room) getIntent().getSerializableExtra("room_object");
 
-        if (roomPosition != -1) {
-            room = RoomData.roomList.get(roomPosition);
+        if (room != null) {
             etRoomId.setText(room.getId());
             etRoomName.setText(room.getName());
             etRoomPrice.setText(String.valueOf(room.getPrice()));
             swRentedStatus.setChecked(room.isRented());
+        } else {
+            // Xử lý trường hợp không nhận được dữ liệu phòng (ví dụ: finish activity)
+            Toast.makeText(this, "Không tìm thấy thông tin phòng.", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
         btnSave.setOnClickListener(v -> {
@@ -56,6 +62,10 @@ public class EditRoomActivity extends AppCompatActivity {
             room.setPrice(price);
             room.setRented(isRented);
 
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("room_position", roomPosition);
+            resultIntent.putExtra("updated_room", room);
+            setResult(RESULT_OK, resultIntent);
             finish();
         });
 
@@ -64,7 +74,10 @@ public class EditRoomActivity extends AppCompatActivity {
                     .setTitle("Xóa phòng")
                     .setMessage("Bạn có chắc chắn muốn xóa phòng này?")
                     .setPositiveButton("Xóa", (dialog, which) -> {
-                        RoomData.roomList.remove(roomPosition);
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("room_position", roomPosition);
+                        resultIntent.putExtra("is_deleted", true);
+                        setResult(RESULT_OK, resultIntent);
                         finish();
                     })
                     .setNegativeButton("Hủy", null)
