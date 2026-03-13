@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setupRecyclerView();
 
         fabAdd.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, AddRoomActivity.class);
+            Intent intent = new Intent(MainActivity.this, AddRoomActivity.class);
 //            startActivity(intent);
         });
     }
