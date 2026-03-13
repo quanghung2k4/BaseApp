@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp">
 
     <LinearLayout
         android:id="@+id/llRoomItem"
@@ -19,21 +19,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/room_name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:id="@+id/tvRoomPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:text="@string/room_price"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray"/>
 
         <TextView
             android:id="@+id/tvRoomStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:text="@string/room_status"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="italic"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

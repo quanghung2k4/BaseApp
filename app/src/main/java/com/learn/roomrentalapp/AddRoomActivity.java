@@ -1,5 +1,6 @@
 package com.learn.roomrentalapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -40,7 +41,10 @@ public class AddRoomActivity extends AppCompatActivity {
             boolean isRented = swRentedStatus.isChecked();
 
             Room newRoom = new Room(id, name, price, isRented);
-            RoomData.roomList.add(newRoom);
+
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("new_room", newRoom);
+            setResult(RESULT_OK, resultIntent);
             finish();
         });
     }
