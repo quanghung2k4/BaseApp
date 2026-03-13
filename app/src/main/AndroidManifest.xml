@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomRentalApp">
         <activity
+            android:name=".EditRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddRoomActivity"
             android:exported="false" />
         <activity
